@@ -1,17 +1,27 @@
 // === FESTER DISCORD WEBHOOK ===
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1453706544028975308/6wG-adxUUL5SUH4HczARyFzVAemqBcrAcKWM-gvHd4aRKIQcEeWmbXHQSHwcxNFZ5dsA";
 
-// === VORGEGEBENE ORTE ===
-// Format: Straße, Hausnummer, Objekt
-const ORTE = [
-  { strasse: "Hauptstraße", hausnummer: "12", objekt: "Supermarkt Lidl" },
-  { strasse: "Bahnhofstraße", hausnummer: "3", objekt: "Bahnhofshalle" },
-  { strasse: "Industriestraße", hausnummer: "7", objekt: "Lagerhalle Nord" },
-  { strasse: "Rathausplatz", hausnummer: "2", objekt: "Rathaus" },
-  { strasse: "Schulweg", hausnummer: "5", objekt: "Volksschule" }
+// === VORGEGEBENE LISTEN ===
+const STRASSEN = [
+  "Hauptstraße",
+  "Bahnhofstraße",
+  "Industriestraße",
+  "Rathausplatz",
+  "Schulweg"
 ];
 
-// === VORGEGEBENE STICHWORTE ===
+const HAUSNUMMERN = [
+  "1", "2", "3", "5", "7", "12"
+];
+
+const OBJEKTE = [
+  "Supermarkt Lidl",
+  "Bahnhofshalle",
+  "Lagerhalle Nord",
+  "Rathaus",
+  "Volksschule"
+];
+
 const STICHWORTE = [
   "Brandmeldealarm",
   "Wohnungsbrand",
@@ -23,47 +33,46 @@ const STICHWORTE = [
 ];
 
 // === DOM ELEMENTE ===
-const ortSelect = document.getElementById("ort-select");
-const stichwortSelect = document.getElementById("stichwort-select");
+const strasseInput = document.getElementById("strasse-input");
+const hausnummerInput = document.getElementById("hausnummer-input");
+const objektInput = document.getElementById("objekt-input");
+const stichwortInput = document.getElementById("stichwort-input");
 const prioCheckbox = document.getElementById("prio-checkbox");
 const extraText = document.getElementById("extra-text");
 const sendBtn = document.getElementById("send-btn");
 const statusP = document.getElementById("status");
 
 // === LISTEN FÜLLEN ===
-function fillOrtSelect() {
-  ORTE.forEach(o => {
+function fillDatalist(id, values) {
+  const list = document.getElementById(id);
+  values.forEach(v => {
     const opt = document.createElement("option");
-    opt.value = `${o.strasse} ${o.hausnummer} – ${o.objekt}`;
-    opt.textContent = `${o.strasse} ${o.hausnummer} – ${o.objekt}`;
-    ortSelect.appendChild(opt);
+    opt.value = v;
+    list.appendChild(opt);
   });
 }
 
-function fillStichwortSelect() {
-  STICHWORTE.forEach(s => {
-    const opt = document.createElement("option");
-    opt.value = s;
-    opt.textContent = s;
-    stichwortSelect.appendChild(opt);
-  });
-}
-
-fillOrtSelect();
-fillStichwortSelect();
+fillDatalist("strassen", STRASSEN);
+fillDatalist("hausnummern", HAUSNUMMERN);
+fillDatalist("objekte", OBJEKTE);
+fillDatalist("stichwoerter", STICHWORTE);
 
 // === ALARM SENDEN ===
 sendBtn.addEventListener("click", async () => {
-  const ort = ortSelect.value;
-  const stichwort = stichwortSelect.value;
+  const strasse = strasseInput.value.trim();
+  const hausnummer = hausnummerInput.value.trim();
+  const objekt = objektInput.value.trim();
+  const stichwort = stichwortInput.value.trim();
   const extra = extraText.value.trim();
   const prio = prioCheckbox.checked ? "Priorität A" : "Priorität B";
 
-  // Pflichtfeld prüfen
-  if (extra.length === 0) {
-    statusP.textContent = "Fehler: Nachricht ist ein Pflichtfeld.";
+  // Pflichtfelder prüfen
+  if (!strasse || !hausnummer || !objekt || !stichwort || !extra) {
+    statusP.textContent = "Fehler: Bitte alle Pflichtfelder ausfüllen.";
     return;
   }
+
+  const ort = `${strasse} ${hausnummer} – ${objekt}`;
 
   const contentLines = [
     "🚨 **Alarmierung der Feuerwehr – Florian LFK!**",
@@ -73,9 +82,7 @@ sendBtn.addEventListener("click", async () => {
     `**Nachricht:** ${extra}`
   ];
 
-  const payload = {
-    content: contentLines.join("\n")
-  };
+  const payload = { content: contentLines.join("\n") };
 
   statusP.textContent = "Sende Alarm...";
 
