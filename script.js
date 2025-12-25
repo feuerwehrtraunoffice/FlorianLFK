@@ -43,7 +43,7 @@ const sendBtn = document.getElementById("send-btn");
 const statusP = document.getElementById("status");
 
 // Eine einzige Rolle, die IMMER gepingt wird
-const ROLE_PING = "<@&979430118705463316>";
+const ROLE_PING = "<@&1453753092347531416>";
 
 // === LISTEN FÜLLEN ===
 function fillDatalist(id, values) {
