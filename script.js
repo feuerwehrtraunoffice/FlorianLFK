@@ -41,6 +41,11 @@ const prioCheckbox = document.getElementById("prio-checkbox");
 const extraText = document.getElementById("extra-text");
 const sendBtn = document.getElementById("send-btn");
 const statusP = document.getElementById("status");
+const sireneCheckbox = document.getElementById("sirene-checkbox");
+
+// Eine einzige Rolle, die IMMER gepingt wird
+const ROLE_PING = "<@&979430118705463316>";
+
 
 // === LISTEN FÜLLEN ===
 function fillDatalist(id, values) {
