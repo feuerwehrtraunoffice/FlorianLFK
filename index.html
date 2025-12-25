@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feuerwehr Alarmierung</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .hidden { display: none; }
+    .section { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+    label { display: block; margin-top: 10px; }
+    select, textarea, input[type="text"], input[type="password"] {
+      width: 100%; padding: 5px;
+    }
+    button { margin-top: 10px; padding: 8px 12px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Feuerwehr Alarmierung</h1>
+
+  <!-- Normaler Einsatz-Erstellen-Bereich -->
+  <div class="section" id="user-view">
+    <h2>Einsatz erstellen</h2>
+
+    <label>Einsatzstichwort:</label>
+    <select id="stichwort-select"></select>
+
+    <label>Einsatzadresse:</label>
+    <select id="adresse-select"></select>
+
+    <label>Zusätzliche Nachricht:</label>
+    <textarea id="extra-text" rows="3" placeholder="z.B. Lage unklar, mehrere Anrufer ..."></textarea>
+
+    <button id="send-btn">Alarm an Discord senden</button>
+
+    <p id="status"></p>
+  </div>
+
+  <!-- Admin-Bereich -->
+  <div class="section">
+    <h2>Admin</h2>
+
+    <label>Admin-PIN:</label>
+    <input type="password" id="admin-pin-input" placeholder="PIN eingeben" />
+    <button id="admin-login-btn">Admin-Ansicht umschalten</button>
+
+    <div id="admin-view" class="hidden">
+      <h3>Listen bearbeiten</h3>
+
+      <label>Einsatzstichworte (eines pro Zeile):</label>
+      <textarea id="stichwort-list" rows="6"></textarea>
+
+      <label>Adressen (eine pro Zeile):</label>
+      <textarea id="adresse-list" rows="6"></textarea>
+
+      <label>Discord Webhook URL:</label>
+      <input type="text" id="webhook-url-input" />
+
+      <button id="save-admin-btn">
