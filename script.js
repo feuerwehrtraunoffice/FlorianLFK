@@ -14,7 +14,7 @@ const STRASSEN = [
 const HAUSNUMMERN = ["1", "2", "3", "5", "7", "12"];
 
 const OBJEKTE = [
-  "Supermarkt Lidl",
+  "Stadtpolizeikommando Traun",
   "Bahnhofshalle",
   "Lagerhalle Nord",
   "Rathaus",
