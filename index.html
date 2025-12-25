@@ -24,13 +24,19 @@
   <div class="section">
     <h2>Einsatz erstellen</h2>
 
+    <label>Einsatzort (Straße – Hausnummer – Objekt):</label>
+    <select id="ort-select"></select>
+
     <label>Einsatzstichwort:</label>
     <select id="stichwort-select"></select>
 
-    <label>Einsatzadresse:</label>
-    <select id="adresse-select"></select>
+    <label>Priorität:</label>
+    <label>
+      <input type="checkbox" id="prio-checkbox">
+      Priorität A (wenn deaktiviert → Priorität B)
+    </label>
 
-    <label>Zusätzliche Nachricht:</label>
+    <label>Nachricht (Pflichtfeld):</label>
     <textarea id="extra-text" rows="3" placeholder="z.B. Lage unklar, mehrere Anrufer ..."></textarea>
 
     <button id="send-btn">Alarm an Discord senden</button>
