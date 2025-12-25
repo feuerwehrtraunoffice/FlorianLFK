@@ -7,50 +7,64 @@
 </head>
 <body>
 
-  <h1>🚒 Alarmierung Feuerwehr Traun – Florian LFK</h1>
+  <!-- PASSWORT-BEREICH -->
+  <div id="login-box">
+    <h2>🔐 Zugang erforderlich</h2>
+    <p>Bitte Passwort eingeben:</p>
+    <input type="password" id="password-input" placeholder="Passwort">
+    <button id="login-btn">Login</button>
+    <p id="login-status"></p>
+  </div>
 
-  <div class="section">
-    <h2>Einsatz erstellen</h2>
+  <!-- HAUPT-INHALT (unsichtbar bis Login) -->
+  <div id="main-content" style="display:none;">
 
-    <label>Straße:</label>
-    <input list="strassen" id="strasse-input" type="text" placeholder="Straße eingeben oder auswählen">
-    <datalist id="strassen"></datalist>
+    <h1>🚒 Alarmierung Feuerwehr Traun – Florian LFK</h1>
 
-    <label>Hausnummer:</label>
-    <input list="hausnummern" id="hausnummer-input" type="text" placeholder="Hausnummer eingeben oder auswählen">
-    <datalist id="hausnummern"></datalist>
+    <div class="section">
+      <h2>Einsatz erstellen</h2>
 
-    <label>Objekt:</label>
-    <input list="objekte" id="objekt-input" type="text" placeholder="Objekt eingeben oder auswählen">
-    <datalist id="objekte"></datalist>
+      <label>Straße:</label>
+      <input list="strassen" id="strasse-input" type="text" placeholder="Straße eingeben oder auswählen">
+      <datalist id="strassen"></datalist>
 
-    <label>Einsatzstichwort:</label>
-    <input list="stichwoerter" id="stichwort-input" type="text" placeholder="Stichwort eingeben oder auswählen">
-    <datalist id="stichwoerter"></datalist>
+      <label>Hausnummer:</label>
+      <input list="hausnummern" id="hausnummer-input" type="text" placeholder="Hausnummer eingeben oder auswählen">
+      <datalist id="hausnummern"></datalist>
 
-    <label>Priorität:</label>
-    <label><input type="checkbox" id="prio-checkbox"> Priorität A</label>
+      <label>Objekt:</label>
+      <input list="objekte" id="objekt-input" type="text" placeholder="Objekt eingeben oder auswählen">
+      <datalist id="objekte"></datalist>
 
-    <label>Alarmierungsart:</label>
-    <label><input type="checkbox" id="sirene-checkbox"> Sirenenalarmierung</label>
+      <label>Einsatzstichwort:</label>
+      <input list="stichwoerter" id="stichwort-input" type="text" placeholder="Stichwort eingeben oder auswählen">
+      <datalist id="stichwoerter"></datalist>
 
-    <h3>Rollen auswählen (optional):</h3>
+      <label>Priorität:</label>
+      <label><input type="checkbox" id="prio-checkbox"> Priorität A</label>
 
-    <div id="role-checkboxes">
-      <label><input type="checkbox" class="role" value="<@&863073589472919552>">Ganze Feuerwehr</label><br>
-      <label><input type="checkbox" class="role" value="<@&1127666527408234498>">Kommando</label><br>
-      <label><input type="checkbox" class="role" value="<@&863076170844864602>">Atemschutz</label><br>
-      <label><input type="checkbox" class="role" value="<@&1453889461581778974>">Vollschutzträger</label><br>
-      <label><input type="checkbox" class="role" value="<@&1172413946158923816>">Sondermaschinisten</label><br>
-      <label><input type="checkbox" class="role" value="<@&1131607127346118776>">Flughelfer</label>
+      <label>Alarmierungsart:</label>
+      <label><input type="checkbox" id="sirene-checkbox"> Sirenenalarmierung</label>
+
+      <h3>Rollen auswählen (optional):</h3>
+
+      <div id="role-checkboxes">
+        <label><input type="checkbox" class="role" value="<@&863073589472919552>">Ganze Feuerwehr</label><br>
+        <label><input type="checkbox" class="role" value="<@&1127666527408234498>">Kommando</label><br>
+        <label><input type="checkbox" class="role" value="<@&863076170844864602>">Atemschutz</label><br>
+        <label><input type="checkbox" class="role" value="<@&1453889461581778974>">Vollschutzträger</label><br>
+        <label><input type="checkbox" class="role" value="<@&1172413946158923816>">Sondermaschinisten</label><br>
+        <label><input type="checkbox" class="role" value="<@&1131607127346118776>">Flughelfer</label>
+      </div>
+
+      <label>Nachricht (Pflichtfeld):</label>
+      <textarea id="extra-text" rows="3" placeholder="z.B. Lage unklar, mehrere Anrufer ..."></textarea>
+
+      <button id="send-btn">Alarm an Discord senden</button>
+
+      <p id="status"></p>
     </div>
-    
-    <label>Nachricht (Pflichtfeld):</label>
-    <textarea id="extra-text" rows="3" placeholder="z.B. Lage unklar, mehrere Anrufer ..."></textarea>
 
-    <button id="send-btn">Alarm an Discord senden</button>
-
-    <p id="status"></p>
   </div>
 
   <script src="script.js"></script>
