@@ -3,6 +3,7 @@ const WEBHOOK_URL = "https://discord.com/api/webhooks/1453706544028975308/6wG-ad
 
 // === VORGEGEBENE LISTEN ===
 const STRASSEN = [
+  "Johann-Roithner-Straße",
   "Hauptstraße",
   "Bahnhofstraße",
   "Industriestraße",
