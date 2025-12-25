@@ -11,7 +11,7 @@ const STRASSEN = [
   "Schulweg"
 ];
 
-const HAUSNUMMERN = ["1", "2", "3", "5", "7", "12"];
+const HAUSNUMMERN = [];
 
 const OBJEKTE = [
   "Stadtpolizeikommando Traun",
