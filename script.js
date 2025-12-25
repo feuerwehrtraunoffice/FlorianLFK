@@ -70,6 +70,8 @@ sendBtn.addEventListener("click", async () => {
   const stichwort = stichwortInput.value.trim();
   const extra = extraText.value.trim();
   const prio = prioCheckbox.checked ? "Priorität A" : "Priorität B";
+  const sirene = sireneCheckbox.checked ? "🔊 Sirenenalarmierung" : "🔕 Stille Alarmierung";
+
 
   // Pflichtfelder prüfen
   if (!strasse || !hausnummer || !objekt || !stichwort || !extra) {
