@@ -1,54 +1,35 @@
-// === KONFIGURATION ===
-const ADMIN_PIN = "1234"; // deine Admin-PIN
+// === FESTER DISCORD WEBHOOK ===
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1453706544028975308/6wG-adxUUL5SUH4HczARyFzVAemqBcrAcKWM-gvHd4aRKIQcEeWmbXHQSHwcxNFZ5dsA";
 
-// Keys für localStorage
-const STORAGE_KEYS = {
-  STICHWORTE: "ff_alarm_stichworte",
-  ADRESSEN: "ff_alarm_adressen",
-  WEBHOOK: "ff_alarm_webhook"
-};
-
-// Standardwerte
-const DEFAULT_STICHWORTE = [
+// === VORGEGEBENE LISTEN ===
+const STICHWORTE = [
   "Brandmeldealarm",
   "Wohnungsbrand",
   "Verkehrsunfall",
-  "Person in Notlage"
+  "Person in Notlage",
+  "Tierrettung",
+  "Ölspur",
+  "Unklare Rauchentwicklung"
 ];
 
-const DEFAULT_ADRESSEN = [
+const ADRESSEN = [
   "Hauptstraße 1",
   "Marktplatz 5",
   "Industriestraße 12",
-  "Schulweg 3"
+  "Schulweg 3",
+  "Bahnhofstraße 7",
+  "Rathausplatz 2"
 ];
 
-// === Hilfsfunktionen ===
-function loadArray(key, fallback) {
-  const raw = localStorage.getItem(key);
-  if (!raw) return fallback;
-  try {
-    const arr = JSON.parse(raw);
-    return Array.isArray(arr) ? arr : fallback;
-  } catch {
-    return fallback;
-  }
-}
+// === DOM ELEMENTE ===
+const stichwortSelect = document.getElementById("stichwort-select");
+const adresseSelect = document.getElementById("adresse-select");
+const extraText = document.getElementById("extra-text");
+const sendBtn = document.getElementById("send-btn");
+const statusP = document.getElementById("status");
 
-function saveArray(key, arr) {
-  localStorage.setItem(key, JSON.stringify(arr));
-}
-
-function loadWebhookUrl() {
-  return localStorage.getItem(STORAGE_KEYS.WEBHOOK) || "";
-}
-
-function saveWebhookUrl(url) {
-  localStorage.setItem(STORAGE_KEYS.WEBHOOK, url);
-}
-
+// === LISTEN FÜLLEN ===
 function fillSelect(selectElem, values) {
-  selectElem.innerHTML = "";
   values.forEach(v => {
     const opt = document.createElement("option");
     opt.value = v;
@@ -57,104 +38,22 @@ function fillSelect(selectElem, values) {
   });
 }
 
-// === DOM Elemente ===
-const stichwortSelect = document.getElementById("stichwort-select");
-const adresseSelect = document.getElementById("adresse-select");
-const extraText = document.getElementById("extra-text");
-const sendBtn = document.getElementById("send-btn");
-const statusP = document.getElementById("status");
+fillSelect(stichwortSelect, STICHWORTE);
+fillSelect(adresseSelect, ADRESSEN);
 
-const adminPinInput = document.getElementById("admin-pin-input");
-const adminLoginBtn = document.getElementById("admin-login-btn");
-const adminView = document.getElementById("admin-view");
-
-const stichwortListTextarea = document.getElementById("stichwort-list");
-const adresseListTextarea = document.getElementById("adresse-list");
-const webhookUrlInput = document.getElementById("webhook-url-input");
-const saveAdminBtn = document.getElementById("save-admin-btn");
-const adminStatusP = document.getElementById("admin-status");
-
-// === Daten laden ===
-let stichworte = loadArray(STORAGE_KEYS.STICHWORTE, DEFAULT_STICHWORTE);
-let adressen = loadArray(STORAGE_KEYS.ADRESSEN, DEFAULT_ADRESSEN);
-
-fillSelect(stichwortSelect, stichworte);
-fillSelect(adresseSelect, adressen);
-
-// === Admin-Login ===
-let adminVisible = false;
-
-adminLoginBtn.addEventListener("click", () => {
-  const pin = adminPinInput.value;
-
-  if (!adminVisible) {
-    if (pin === ADMIN_PIN) {
-      adminVisible = true;
-      adminView.classList.remove("hidden");
-
-      stichwortListTextarea.value = stichworte.join("\n");
-      adresseListTextarea.value = adressen.join("\n");
-      webhookUrlInput.value = loadWebhookUrl();
-    } else {
-      alert("Falsche PIN.");
-    }
-  } else {
-    adminVisible = false;
-    adminView.classList.add("hidden");
-  }
-});
-
-// === Admin speichern ===
-saveAdminBtn.addEventListener("click", () => {
-  const stichArr = stichwortListTextarea.value
-    .split("\n")
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
-
-  const adrArr = adresseListTextarea.value
-    .split("\n")
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
-
-  const webhookUrl = webhookUrlInput.value.trim();
-
-  if (stichArr.length === 0 || adrArr.length === 0) {
-    adminStatusP.textContent = "Fehler: Listen dürfen nicht leer sein.";
-    return;
-  }
-
-  stichworte = stichArr;
-  adressen = adrArr;
-
-  saveArray(STORAGE_KEYS.STICHWORTE, stichworte);
-  saveArray(STORAGE_KEYS.ADRESSEN, adressen);
-  saveWebhookUrl(webhookUrl);
-
-  fillSelect(stichwortSelect, stichworte);
-  fillSelect(adresseSelect, adressen);
-
-  adminStatusP.textContent = "Gespeichert.";
-});
-
-// === Alarm senden ===
+// === ALARM SENDEN ===
 sendBtn.addEventListener("click", async () => {
-  const webhookUrl = loadWebhookUrl();
-  if (!webhookUrl) {
-    statusP.textContent = "Fehler: Kein Webhook konfiguriert.";
-    return;
-  }
-
   const stichwort = stichwortSelect.value;
   const adresse = adresseSelect.value;
   const extra = extraText.value.trim();
 
   const contentLines = [
-    "🚨 **Alarmierung der Feuerwehr!**",
+    "🚨 **Alarmierung der Feuerwehr – Florian LFK!**",
     `**Einsatzstichwort:** ${stichwort}`,
     `**Adresse:** ${adresse}`
   ];
 
-  if (extra) {
+  if (extra.length > 0) {
     contentLines.push(`**Hinweis:** ${extra}`);
   }
 
@@ -165,7 +64,7 @@ sendBtn.addEventListener("click", async () => {
   statusP.textContent = "Sende Alarm...";
 
   try {
-    const res = await fetch(webhookUrl, {
+    const res = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
