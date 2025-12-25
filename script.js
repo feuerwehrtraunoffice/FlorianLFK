@@ -11,9 +11,7 @@ const STRASSEN = [
   "Schulweg"
 ];
 
-const HAUSNUMMERN = [
-  "1", "2", "3", "5", "7", "12"
-];
+const HAUSNUMMERN = ["1", "2", "3", "5", "7", "12"];
 
 const OBJEKTE = [
   "Supermarkt Lidl",
@@ -39,22 +37,17 @@ const hausnummerInput = document.getElementById("hausnummer-input");
 const objektInput = document.getElementById("objekt-input");
 const stichwortInput = document.getElementById("stichwort-input");
 const prioCheckbox = document.getElementById("prio-checkbox");
+const sireneCheckbox = document.getElementById("sirene-checkbox");
 const extraText = document.getElementById("extra-text");
 const sendBtn = document.getElementById("send-btn");
 const statusP = document.getElementById("status");
-const sireneCheckbox = document.getElementById("sirene-checkbox");
 
 // Eine einzige Rolle, die IMMER gepingt wird
 const ROLE_PING = "<@&979430118705463316>";
 
-
 // === LISTEN FÜLLEN ===
 function fillDatalist(id, values) {
   const list = document.getElementById(id);
-  if (!list) {
-    console.error("Datalist nicht gefunden:", id);
-    return;
-  }
   list.innerHTML = "";
   values.forEach(v => {
     const opt = document.createElement("option");
@@ -75,9 +68,9 @@ sendBtn.addEventListener("click", async () => {
   const objekt = objektInput.value.trim();
   const stichwort = stichwortInput.value.trim();
   const extra = extraText.value.trim();
+
   const prio = prioCheckbox.checked ? "Priorität A" : "Priorität B";
   const sirene = sireneCheckbox.checked ? "🔊 Sirenenalarmierung" : "🔕 Stille Alarmierung";
-
 
   // Pflichtfelder prüfen
   if (!strasse || !hausnummer || !objekt || !stichwort || !extra) {
@@ -95,8 +88,6 @@ sendBtn.addEventListener("click", async () => {
     `**${prio}**`,
     `**${sirene}**`,
     `**Nachricht:** ${extra}`
-};
-
   ];
 
   const payload = { content: contentLines.join("\n") };
