@@ -1,5 +1,5 @@
 // === FESTER DISCORD WEBHOOK ===
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1453706544028975308/6wG-adxUUL5SUH4HczARyFzVAemqBcrAcKWM-gvHd4aRKIQcEeWmbXHQSHwcxNFZ5dsA";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1453136888750932040/P0FXeWBPsOtnflJt3zO-57iLNoHF3MpwbzmiY5b1mXlUvcSWMn5WxgenI2BpHyKHjL7Z";
 
 // === VORGEGEBENE LISTEN ===
 const STRASSEN = [
