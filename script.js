@@ -82,11 +82,15 @@ sendBtn.addEventListener("click", async () => {
   const ort = `${strasse} ${hausnummer} – ${objekt}`;
 
   const contentLines = [
+    `${ROLE_PING}`,
     "🚨 **Alarmierung der Feuerwehr – Florian LFK!**",
     `**Einsatzort:** ${ort}`,
     `**Einsatzstichwort:** ${stichwort}`,
     `**${prio}**`,
+    `**${sirene}**`,
     `**Nachricht:** ${extra}`
+};
+
   ];
 
   const payload = { content: contentLines.join("\n") };
