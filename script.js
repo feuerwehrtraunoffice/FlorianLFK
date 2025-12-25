@@ -1,5 +1,13 @@
+
 // === PASSWORT (nur SHA-256 Hash, kein Klartext) ===
 const PASSWORD_HASH = "0bd042bb5f346bf87910fbc7e2add01c437031187cf46dad03d974fccdfe0243";
+
+// === LOGIN ELEMENTE ===
+const loginBox = document.getElementById("login-box");
+const mainContent = document.getElementById("main-content");
+const loginBtn = document.getElementById("login-btn");
+const loginStatus = document.getElementById("login-status");
+const passwordInput = document.getElementById("password-input");
 
 // SHA-256 Funktion
 async function sha256(text) {
@@ -22,9 +30,6 @@ loginBtn.addEventListener("click", async () => {
     loginStatus.textContent = "❌ Falsches Passwort";
   }
 });
-
-// === FESTER DISCORD WEBHOOK ===
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1453136888750932040/P0FXeWBPsOtnflJt3zO-57iLNoHF3MpwbzmiY5b1mXlUvcSWMn5WxgenI2BpHyKHjL7Z";
 
 // === VORGEGEBENE LISTEN ===
 const STRASSEN = [
