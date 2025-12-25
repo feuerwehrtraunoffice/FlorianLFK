@@ -1,27 +1,16 @@
 // === FESTER DISCORD WEBHOOK ===
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1453706544028975308/6wG-adxUUL5SUH4HczARyFzVAemqBcrAcKWM-gvHd4aRKIQcEeWmbXHQSHwcxNFZ5dsA";
 
-// === VORGEGEBENE LISTEN ===
-const STRASSEN = [
-  "Hauptstraße",
-  "Bahnhofstraße",
-  "Industriestraße",
-  "Rathausplatz",
-  "Schulweg"
+// === ORTE MIT AUTOMATISCHER ADRESSZUORDNUNG ===
+const ORTE = [
+  { objekt: "Supermarkt Lidl", strasse: "Hauptstraße", hausnummer: "12" },
+  { objekt: "Bahnhofshalle", strasse: "Bahnhofstraße", hausnummer: "3" },
+  { objekt: "Lagerhalle Nord", strasse: "Industriestraße", hausnummer: "7" },
+  { objekt: "Rathaus", strasse: "Rathausplatz", hausnummer: "2" },
+  { objekt: "Volksschule", strasse: "Schulweg", hausnummer: "5" }
 ];
 
-const HAUSNUMMERN = [
-  "1", "2", "3", "5", "7", "12"
-];
-
-const OBJEKTE = [
-  "Supermarkt Lidl",
-  "Bahnhofshalle",
-  "Lagerhalle Nord",
-  "Rathaus",
-  "Volksschule"
-];
-
+// === STICHWORTE MIT AUTOMATISCHER PRIORITÄT ===
 const STICHWORTE = [
   "Brandmeldealarm",
   "Wohnungsbrand",
@@ -31,6 +20,16 @@ const STICHWORTE = [
   "Ölspur",
   "Unklare Rauchentwicklung"
 ];
+
+const AUTO_PRIO = {
+  "Brandmeldealarm": true,
+  "Wohnungsbrand": true,
+  "Verkehrsunfall": true,
+  "Person in Notlage": true,
+  "Tierrettung": false,
+  "Ölspur": false,
+  "Unklare Rauchentwicklung": false
+};
 
 // === DOM ELEMENTE ===
 const strasseInput = document.getElementById("strasse-input");
@@ -45,10 +44,6 @@ const statusP = document.getElementById("status");
 // === LISTEN FÜLLEN ===
 function fillDatalist(id, values) {
   const list = document.getElementById(id);
-  if (!list) {
-    console.error("Datalist nicht gefunden:", id);
-    return;
-  }
   list.innerHTML = "";
   values.forEach(v => {
     const opt = document.createElement("option");
@@ -57,10 +52,28 @@ function fillDatalist(id, values) {
   });
 }
 
-fillDatalist("strassen", STRASSEN);
-fillDatalist("hausnummern", HAUSNUMMERN);
-fillDatalist("objekte", OBJEKTE);
+fillDatalist("objekte", ORTE.map(o => o.objekt));
+fillDatalist("strassen", ORTE.map(o => o.strasse));
+fillDatalist("hausnummern", ORTE.map(o => o.hausnummer));
 fillDatalist("stichwoerter", STICHWORTE);
+
+// === AUTOMATISCHE ADRESSAUSWAHL BEI OBJEKT ===
+objektInput.addEventListener("input", () => {
+  const obj = objektInput.value.trim();
+  const eintrag = ORTE.find(o => o.objekt === obj);
+  if (eintrag) {
+    strasseInput.value = eintrag.strasse;
+    hausnummerInput.value = eintrag.hausnummer;
+  }
+});
+
+// === AUTOMATISCHE PRIORITÄT BEI STICHWORT ===
+stichwortInput.addEventListener("input", () => {
+  const stw = stichwortInput.value.trim();
+  if (AUTO_PRIO.hasOwnProperty(stw)) {
+    prioCheckbox.checked = AUTO_PRIO[stw];
+  }
+});
 
 // === ALARM SENDEN ===
 sendBtn.addEventListener("click", async () => {
@@ -71,7 +84,6 @@ sendBtn.addEventListener("click", async () => {
   const extra = extraText.value.trim();
   const prio = prioCheckbox.checked ? "Priorität A" : "Priorität B";
 
-  // Pflichtfelder prüfen
   if (!strasse || !hausnummer || !objekt || !stichwort || !extra) {
     statusP.textContent = "Fehler: Bitte alle Pflichtfelder ausfüllen.";
     return;
@@ -79,15 +91,15 @@ sendBtn.addEventListener("click", async () => {
 
   const ort = `${strasse} ${hausnummer} – ${objekt}`;
 
-  const contentLines = [
-    "🚨 **Alarmierung der Feuerwehr – Florian LFK!**",
-    `**Einsatzort:** ${ort}`,
-    `**Einsatzstichwort:** ${stichwort}`,
-    `**${prio}**`,
-    `**Nachricht:** ${extra}`
-  ];
-
-  const payload = { content: contentLines.join("\n") };
+  const payload = {
+    content: [
+      "🚨 **Alarmierung der Feuerwehr – Florian LFK!**",
+      `**Einsatzort:** ${ort}`,
+      `**Einsatzstichwort:** ${stichwort}`,
+      `**${prio}**`,
+      `**Nachricht:** ${extra}`
+    ].join("\n")
+  };
 
   statusP.textContent = "Sende Alarm...";
 
@@ -105,7 +117,6 @@ sendBtn.addEventListener("click", async () => {
       statusP.textContent = "Fehler beim Senden. HTTP-Status: " + res.status;
     }
   } catch (err) {
-    console.error(err);
     statusP.textContent = "Netzwerkfehler beim Senden.";
   }
 });
