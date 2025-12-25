@@ -29,26 +29,21 @@
     <datalist id="stichwoerter"></datalist>
 
     <label>Priorität:</label>
-    <label>
-      <input type="checkbox" id="prio-checkbox">
-      Priorität A
-    </label>
+    <label><input type="checkbox" id="prio-checkbox"> Priorität A</label>
 
     <label>Alarmierungsart:</label>
-    <label>
-      <input type="checkbox" id="sirene-checkbox">
-      Sirenenalarmierung
-    </label>
+    <label><input type="checkbox" id="sirene-checkbox"> Sirenenalarmierung</label>
 
-    <label>Rollen auswählen (Mehrfachauswahl möglich):</label>
-    <select id="role-select" multiple size="5">
-      <option value="<@&863073589472919552>">Ganze Feuerwehr</option>
-      <option value="<@&1127666527408234498>">Kommando</option>
-      <option value="<@&863076170844864602>">Atemschutz</option>
-      <option value="<@&1172413946158923816>">Sondermaschinisten</option>
-      <option value="<@&1131607127346118776>">Flughelfer</option>
-    </select>
+    <h3>Rollen auswählen (optional):</h3>
 
+    <div id="role-checkboxes">
+      <label><input type="checkbox" class="role" value="<@&863073589472919552>">Ganze Feuerwehr</label><br>
+      <label><input type="checkbox" class="role" value="<@&1127666527408234498>">Kommando</label><br>
+      <label><input type="checkbox" class="role" value="<@&863076170844864602>">Atemschutz</label><br>
+      <label><input type="checkbox" class="role" value="<@&1172413946158923816>">Sondermaschinisten</label><br>
+      <label><input type="checkbox" class="role" value="<@&1131607127346118776>">Flughelfer</label>
+    </div>
+    
     <label>Nachricht (Pflichtfeld):</label>
     <textarea id="extra-text" rows="3" placeholder="z.B. Lage unklar, mehrere Anrufer ..."></textarea>
 
