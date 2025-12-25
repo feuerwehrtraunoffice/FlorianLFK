@@ -7,7 +7,7 @@
     body { font-family: Arial, sans-serif; margin: 20px; }
     .section { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
     label { display: block; margin-top: 10px; }
-    select, textarea {
+    input, textarea, select {
       width: 100%; padding: 5px; margin-top: 5px;
     }
     button {
@@ -24,11 +24,21 @@
   <div class="section">
     <h2>Einsatz erstellen</h2>
 
-    <label>Einsatzort (Straße – Hausnummer – Objekt):</label>
-    <select id="ort-select"></select>
+    <label>Straße:</label>
+    <input list="strassen" id="strasse-input" placeholder="Straße eingeben oder auswählen">
+    <datalist id="strassen"></datalist>
+
+    <label>Hausnummer:</label>
+    <input list="hausnummern" id="hausnummer-input" placeholder="Hausnummer eingeben oder auswählen">
+    <datalist id="hausnummern"></datalist>
+
+    <label>Objekt:</label>
+    <input list="objekte" id="objekt-input" placeholder="Objekt eingeben oder auswählen">
+    <datalist id="objekte"></datalist>
 
     <label>Einsatzstichwort:</label>
-    <select id="stichwort-select"></select>
+    <input list="stichwoerter" id="stichwort-input" placeholder="Stichwort eingeben oder auswählen">
+    <datalist id="stichwoerter"></datalist>
 
     <label>Priorität:</label>
     <label>
