@@ -45,6 +45,11 @@ const statusP = document.getElementById("status");
 // === LISTEN FÜLLEN ===
 function fillDatalist(id, values) {
   const list = document.getElementById(id);
+  if (!list) {
+    console.error("Datalist nicht gefunden:", id);
+    return;
+  }
+  list.innerHTML = "";
   values.forEach(v => {
     const opt = document.createElement("option");
     opt.value = v;
