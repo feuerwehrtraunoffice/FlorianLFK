@@ -41,9 +41,7 @@ const sireneCheckbox = document.getElementById("sirene-checkbox");
 const extraText = document.getElementById("extra-text");
 const sendBtn = document.getElementById("send-btn");
 const statusP = document.getElementById("status");
-
-// Eine einzige Rolle, die IMMER gepingt wird
-const ROLE_PING = "<@&863073589472919552>";
+const roleSelect = document.getElementById("role-select");
 
 // === LISTEN FÜLLEN ===
 function fillDatalist(id, values) {
@@ -78,10 +76,22 @@ sendBtn.addEventListener("click", async () => {
     return;
   }
 
+  // Rollen sammeln
+  const selectedRoles = Array.from(roleSelect.selectedOptions).map(opt => opt.value);
+
+  if (selectedRoles.length === 0) {
+    statusP.textContent = "Bitte mindestens eine Rolle auswählen.";
+    return;
+  }
+
+  // Wenn ALLE Rollen ausgewählt wurden → NICHT @everyone verwenden
+  // sondern alle Rollen einzeln pingen
+  const rolePing = selectedRoles.join(" ");
+
   const ort = `${strasse} ${hausnummer} – ${objekt}`;
 
   const contentLines = [
-    `${ROLE_PING}`,
+    rolePing,
     "# 🚨 **Einsatz Alarmierung Feuerwehr Traun!**",
     `**Einsatzort:** ${ort}`,
     `**Einsatzstichwort:** ${stichwort}`,
