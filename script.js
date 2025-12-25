@@ -82,7 +82,7 @@ sendBtn.addEventListener("click", async () => {
 
   const contentLines = [
     `${ROLE_PING}`,
-    "🚨 **Alarmierung der Feuerwehr Traun – Florian LFK!**",
+    "# 🚨 **Einsatz Alarmierung Feuerwehr Traun!**",
     `**Einsatzort:** ${ort}`,
     `**Einsatzstichwort:** ${stichwort}`,
     `**${prio}**`,
